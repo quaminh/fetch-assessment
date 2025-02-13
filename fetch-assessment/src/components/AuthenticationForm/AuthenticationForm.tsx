@@ -3,7 +3,7 @@ export default function AuthenticationForm() {
         <form>
             <input type="text"></input>
             <input type="email"></input>
-            <button>Log In</button>
+            <button>Login</button>
         </form>
     )
 }
