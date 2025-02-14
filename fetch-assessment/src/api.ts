@@ -34,26 +34,91 @@ export async function logout() {
     }
 }
 
-// function getDogBreeds() {
+export async function getDogBreeds() {
+    try {
+        const response = await fetch(url + "/dogs/breeds", {
+            method: "GET",
+            headers: headers,
+            credentials: "include"
+        })
+        console.log(await response.json());
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
 
-// }
+export async function searchDogs() {
+    try {
+        const response = await fetch(url + "/dogs/search", {
+            method: "GET",
+            headers: headers,
+            credentials: "include"
+        })
+        console.log(await response.json());
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
 
-// function searchDogs() {
+export async function getDogs() {
+    try {
+        const response = await fetch(url + "/dogs", {
+            method: "POST",
+            body: JSON.stringify([
+                "VXGFTIcBOvEgQ5OCx40W",
+                "V3GFTIcBOvEgQ5OCx40W",
+                "WHGFTIcBOvEgQ5OCx40W"
+            ]),
+            headers: headers,
+            credentials: "include"
+        })
+        console.log(await response.json());
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
 
-// }
+export async function matchDog() {
+    try {
+        const response = await fetch(url + "/dogs/match", {
+            method: "POST",
+            headers: headers,
+            credentials: "include"
+        })
+        console.log(response);
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
 
-// function getDogs() {
+export async function getLocations() {
+    try {
+        const response = await fetch(url + "/locations", {
+            method: "POST",
+            headers: headers,
+            credentials: "include"
+        })
+        console.log(response);
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
 
-// }
-
-// function matchDog() {
-
-// }
-
-// function getLocations() {
-
-// }
-
-// function searchLocations() {
-
-// }
+export async function searchLocations() {
+    try {
+        const response = await fetch(url + "/locations/search", {
+            method: "POST",
+            headers: headers,
+            credentials: "include"
+        })
+        console.log(response);
+    }
+    catch (error) {
+        console.error(error);
+    }
+}

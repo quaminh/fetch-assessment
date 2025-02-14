@@ -1,46 +1,20 @@
 import './App.css'
-import { logout } from './api.ts'
+import * as api from './api.ts'
 import Title from './components/Title/Title'
 import AuthenticationForm from './components/AuthenticationForm/AuthenticationForm'
-import DogCard from './components/DogCard/DogCard'
-
-const testDogs = [
-  {
-    id: "0",
-    img: "string",
-    name: "Dog1",
-    age: 1,
-    zip_code: "11111",
-    breed: "breed1"
-  },
-  {
-    id: "1",
-    img: "string",
-    name: "Dog2",
-    age: 2,
-    zip_code: "22222",
-    breed: "breed2"
-  },
-  {
-    id: "2",
-    img: "string",
-    name: "Dog3",
-    age: 3,
-    zip_code: "33333",
-    breed: "breed3"
-  }
-]
+import DogsDisplay from './components/DogsDisplay/DogsDisplay.tsx'
 
 function App() {
   return (
     <>
       <Title>Fetch a Dog!</Title>
       <AuthenticationForm />
-      <button onClick={logout}>Logout</button>
+      <button onClick={api.logout}>Logout</button>
+      <button onClick={api.getDogBreeds}>Dog Breeds</button>
+      <button onClick={api.searchDogs}>Search Dogs</button>
+      <button onClick={api.getDogs}>Get Dogs</button>
 
-      {testDogs.map((dog) => (
-        <DogCard dogObject={dog} />
-      ))}
+      <DogsDisplay />
     </>
   )
 }

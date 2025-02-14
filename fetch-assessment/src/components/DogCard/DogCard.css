@@ -1,0 +1,17 @@
+.dogCard {
+    background-color: rgb(255, 178, 90);
+    padding: 1em;
+    width: 14em;
+    height: 14em;
+    border-radius: 1em;
+    box-sizing: border-box;
+}
+
+.container {
+    position: absolute;
+}
+
+img {
+    width: 12em;
+    height: auto;
+}
