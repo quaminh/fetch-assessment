@@ -1,9 +1,11 @@
+import { login } from "../../api.ts"
+
 export default function AuthenticationForm() {
     return (
-        <form>
-            <input type="text"></input>
-            <input type="email"></input>
-            <button>Login</button>
+        <form action={login}>
+            <input name="name" type="text"></input>
+            <input name="email" type="email"></input>
+            <button type="submit">Login</button>
         </form>
     )
 }

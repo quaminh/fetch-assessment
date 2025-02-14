@@ -1,4 +1,5 @@
 import './App.css'
+import { logout } from './api.ts'
 import Title from './components/Title/Title'
 import AuthenticationForm from './components/AuthenticationForm/AuthenticationForm'
 import DogCard from './components/DogCard/DogCard'
@@ -35,6 +36,8 @@ function App() {
     <>
       <Title>Fetch a Dog!</Title>
       <AuthenticationForm />
+      <button onClick={logout}>Logout</button>
+
       {testDogs.map((dog) => (
         <DogCard dogObject={dog} />
       ))}
