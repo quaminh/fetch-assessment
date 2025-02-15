@@ -85,10 +85,15 @@ export async function matchDog() {
     try {
         const response = await fetch(url + "/dogs/match", {
             method: "POST",
+            body: JSON.stringify([
+                "VXGFTIcBOvEgQ5OCx40W",
+                "V3GFTIcBOvEgQ5OCx40W",
+                "WHGFTIcBOvEgQ5OCx40W"
+            ]),
             headers: headers,
             credentials: "include"
         })
-        console.log(response);
+        console.log(await response.json());
     }
     catch (error) {
         console.error(error);
@@ -99,10 +104,15 @@ export async function getLocations() {
     try {
         const response = await fetch(url + "/locations", {
             method: "POST",
+            body: JSON.stringify([
+                "48333",
+                "25275",
+                "11962"
+            ]),
             headers: headers,
             credentials: "include"
         })
-        console.log(response);
+        console.log(await response.json());
     }
     catch (error) {
         console.error(error);
@@ -113,10 +123,13 @@ export async function searchLocations() {
     try {
         const response = await fetch(url + "/locations/search", {
             method: "POST",
+            body: JSON.stringify({
+                // nothing yet lol
+            }),
             headers: headers,
             credentials: "include"
         })
-        console.log(response);
+        console.log(await response.json());
     }
     catch (error) {
         console.error(error);

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './DogCard.css'
 import LikeButton from '../LikeButton/LikeButton'
 import { Dog } from '../../lib/types'
