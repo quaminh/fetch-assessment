@@ -1,15 +1,15 @@
+import { useState } from 'react'
 import './DogCard.css'
+import LikeButton from '../LikeButton/LikeButton'
+import { Dog } from '../../lib/types'
 
-type Dog = {
-    id: string,
-    img: string,
-    name: string,
-    age: number,
-    zip_code: string,
-    breed: string
+type DogCardProps = {
+    handleLikeUnlike: Function,
+    dogObject: Dog,
+    liked: boolean
 }
 
-export default function DogCard({ dogObject } : { dogObject: Dog }) {
+export default function DogCard({ handleLikeUnlike, dogObject, liked } : DogCardProps) {
     return (
         <div className="dogCard">
             <div className="container">
@@ -17,6 +17,9 @@ export default function DogCard({ dogObject } : { dogObject: Dog }) {
                 <h2 className="age">{dogObject.age}</h2>
                 <h3 className="breed">{dogObject.breed}</h3>
                 <h4 className="zipCode">{dogObject.zip_code}</h4>
+                <LikeButton onClick={() => {
+                    handleLikeUnlike(dogObject, liked);
+                }} liked={liked} />
             </div>
             <img src={dogObject.img} />
         </div>
