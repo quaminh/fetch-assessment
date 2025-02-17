@@ -52,9 +52,21 @@ export async function getDogBreeds() {
     }
 }
 
-export async function searchDogs(endpoint: string) {
+export async function searchDogs(endpoint?: string, sortOrder: "ascending" | "descending" = "ascending", breeds?: string[], zipCodes?: number[], ageMin?: number, ageMax?: number) {
     if (!endpoint) {
-        endpoint = "/dogs/search?sort=breed:asc";
+        endpoint = `/dogs/search?sort=breed:${sortOrder.substring(0, 3)}`;
+        if (breeds) {
+            endpoint += '&' + encodeURIComponent(breeds.toString());
+        }
+        if (zipCodes) {
+            endpoint += '&' + encodeURIComponent(zipCodes.toString());
+        }
+        if (ageMin) {
+            endpoint += '&' + encodeURIComponent(ageMin);
+        }
+        if (ageMax) {
+            endpoint += '&' + encodeURIComponent(ageMax);
+        }
     }
     try {
         const response = await fetch(url + endpoint, {

@@ -9,7 +9,7 @@ import { Dog, Match } from './lib/types'
 
 const emptyDog: Dog = {
   id: "",
-  img: "",
+  img: null,
   name: "",
   breed: "",
   age: 0,
@@ -29,6 +29,7 @@ function App() {
     const status = await api.login(formData);
     if (status === 200) {
       setLoggedIn(true);
+      alert("Logged in successfully!");
       const dogBreeds = await api.getDogBreeds();
       setBreeds(dogBreeds);
     }
@@ -38,6 +39,7 @@ function App() {
     const status = await api.logout();
     if (status === 200) {
       setLoggedIn(false);
+      alert("Logged out successfully");
     }
   };
 
@@ -81,6 +83,13 @@ function App() {
       <select>
         {breeds.map((breed) => (<option>{breed}</option>))}
       </select>
+      <select>
+        <option>Ascending</option>
+        <option>Descending</option>
+      </select>
+      <input type="number" placeholder="Min" />
+      <input type="number" placeholder="Max" />
+      <input type="number" placeholder="Zip Code" />
 
       <DogsDisplay>
         {searchedDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.includes(dog)}/>))}

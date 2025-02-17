@@ -1,4 +1,4 @@
-import { login } from "../../api.ts"
+import "./AuthenticationForm.css"
 
 type AuthenticationFormProps = {
     handleLogin: (formData: FormData) => void;
