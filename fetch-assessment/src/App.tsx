@@ -17,12 +17,29 @@ const emptyDog: Dog = {
 }
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [breeds, setBreeds] = useState<string[]>([]);
   const [likedDogs, setLikedDogs] = useState<Dog[]>([]);
   const [searchedDogs, setSearchedDogs] = useState<Dog[]>([]);
   const [next, setNext] = useState<string>("");
   const [prev, setPrev] = useState<string>("");
   const [matchedDog, setMatchedDog] = useState<Dog>(emptyDog);
+
+  const handleLogin = async (formData: FormData) => {
+    const status = await api.login(formData);
+    if (status === 200) {
+      setLoggedIn(true);
+      const dogBreeds = await api.getDogBreeds();
+      setBreeds(dogBreeds);
+    }
+  };
+
+  const handleLogout = async () => {
+    const status = await api.logout();
+    if (status === 200) {
+      setLoggedIn(false);
+    }
+  };
 
   const handleLikeUnlike = (dogObject: Dog, liked: boolean) => {
     if (!liked) {
@@ -50,14 +67,20 @@ function App() {
 
   return (
     <>
+      {!loggedIn ?
+      <>
       <Title>Fetch a Dog!</Title>
-      <AuthenticationForm />
-      <button onClick={() => api.logout()}>Logout</button>
-      <button onClick={() => api.getDogBreeds()}>Dog Breeds</button>
+      <AuthenticationForm handleLogin={handleLogin} />
+      </> :
+      <>
+      <button onClick={() => handleLogout()}>Logout</button>
       <button onClick={() => handleSearch()}>Search Dogs</button>
       <button onClick={() => handleSearch(next)}>Next</button>
       <button onClick={() => handleSearch(prev)}>Prev</button>
       <button onClick={() => handleMatch()}>Match</button>
+      <select>
+        {breeds.map((breed) => (<option>{breed}</option>))}
+      </select>
 
       <DogsDisplay>
         {searchedDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.includes(dog)}/>))}
@@ -69,6 +92,7 @@ function App() {
       <DogsDisplay>
         <DogCard handleLikeUnlike={handleLikeUnlike} dogObject={matchedDog} liked={true} />
       </DogsDisplay>
+      </>}
     </>
   )
 }

@@ -14,6 +14,7 @@ export async function login(formData: FormData) {
             credentials: "include"
         });
         console.log(response);
+        return response.status;
     }
     catch (error) {
         console.error(error);
@@ -28,6 +29,7 @@ export async function logout() {
             credentials: "include"
         })
         console.log(response);
+        return response.status;
     }
     catch (error) {
         console.error(error);
@@ -41,7 +43,9 @@ export async function getDogBreeds() {
             headers: headers,
             credentials: "include"
         })
-        console.log(await response.json());
+        const parsed = await response.json();
+        console.log(parsed);
+        return parsed;
     }
     catch (error) {
         console.error(error);
