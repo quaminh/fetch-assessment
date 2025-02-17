@@ -2,13 +2,13 @@ const url = "https://frontend-take-home-service.fetch.com";
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
 
-export async function login() {
+export async function login(formData: FormData) {
     try {
         const response = await fetch(url + "/auth/login", {
             method: "POST",
             body: JSON.stringify({
-                name: "Joy Boy",
-                email: "joyboy@gmail.com"
+                name: formData.get("name"),
+                email: formData.get("email")
             }),
             headers: headers,
             credentials: "include"
@@ -48,67 +48,64 @@ export async function getDogBreeds() {
     }
 }
 
-export async function searchDogs() {
+export async function searchDogs(endpoint: string) {
+    if (!endpoint) {
+        endpoint = "/dogs/search?sort=breed:asc";
+    }
     try {
-        const response = await fetch(url + "/dogs/search", {
+        const response = await fetch(url + endpoint, {
             method: "GET",
             headers: headers,
             credentials: "include"
         })
-        console.log(await response.json());
+        const parsed = await response.json();
+        console.log(parsed);
+        return parsed;
     }
     catch (error) {
         console.error(error);
     }
 }
 
-export async function getDogs() {
+export async function getDogs(dogIds: string[]) {
     try {
         const response = await fetch(url + "/dogs", {
             method: "POST",
-            body: JSON.stringify([
-                "VXGFTIcBOvEgQ5OCx40W",
-                "V3GFTIcBOvEgQ5OCx40W",
-                "WHGFTIcBOvEgQ5OCx40W"
-            ]),
+            body: JSON.stringify(dogIds),
             headers: headers,
             credentials: "include"
         })
-        console.log(await response.json());
+        const parsed = await response.json();
+        console.log(parsed);
+        return parsed;
     }
     catch (error) {
         console.error(error);
     }
 }
 
-export async function matchDog() {
+export async function matchDog(dogIds: string[]) {
     try {
         const response = await fetch(url + "/dogs/match", {
             method: "POST",
-            body: JSON.stringify([
-                "VXGFTIcBOvEgQ5OCx40W",
-                "V3GFTIcBOvEgQ5OCx40W",
-                "WHGFTIcBOvEgQ5OCx40W"
-            ]),
+            body: JSON.stringify(dogIds),
             headers: headers,
             credentials: "include"
         })
-        console.log(await response.json());
+        const parsed = await response.json();
+        console.log(parsed);
+        return parsed;
     }
     catch (error) {
         console.error(error);
     }
 }
 
-export async function getLocations() {
+export async function getLocations(zipcodes: string[]) {
     try {
         const response = await fetch(url + "/locations", {
             method: "POST",
-            body: JSON.stringify([
-                "48333",
-                "25275",
-                "11962"
-            ]),
+            body: JSON.stringify(zipcodes),
             headers: headers,
             credentials: "include"
         })

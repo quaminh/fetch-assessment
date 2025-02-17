@@ -5,37 +5,24 @@ import Title from './components/Title/Title'
 import AuthenticationForm from './components/AuthenticationForm/AuthenticationForm'
 import DogsDisplay from './components/DogsDisplay/DogsDisplay.tsx'
 import DogCard from './components/DogCard/DogCard'
-import { Dog } from './lib/types'
+import { Dog, Match } from './lib/types'
 
-const testDogs = [
-    {
-      id: "0",
-      img: "https://frontend-take-home.fetch.com/dog-images/n02085620-Chihuahua/n02085620_11238.jpg",
-      name: "Dog1",
-      age: 1,
-      zip_code: "11111",
-      breed: "breed1"
-    },
-    {
-      id: "1",
-      img: "https://frontend-take-home.fetch.com/dog-images/n02085620-Chihuahua/n02085620_11238.jpg",
-      name: "Dog2",
-      age: 2,
-      zip_code: "22222",
-      breed: "breed2"
-    },
-    {
-      id: "2",
-      img: "https://frontend-take-home.fetch.com/dog-images/n02085620-Chihuahua/n02085620_11238.jpg",
-      name: "Dog3",
-      age: 3,
-      zip_code: "33333",
-      breed: "breed3"
-    }
-  ]
+const emptyDog: Dog = {
+  id: "",
+  img: "",
+  name: "",
+  breed: "",
+  age: 0,
+  zip_code: ""
+}
 
 function App() {
+  const [breeds, setBreeds] = useState<string[]>([]);
   const [likedDogs, setLikedDogs] = useState<Dog[]>([]);
+  const [searchedDogs, setSearchedDogs] = useState<Dog[]>([]);
+  const [next, setNext] = useState<string>("");
+  const [prev, setPrev] = useState<string>("");
+  const [matchedDog, setMatchedDog] = useState<Dog>(emptyDog);
 
   const handleLikeUnlike = (dogObject: Dog, liked: boolean) => {
     if (!liked) {
@@ -46,20 +33,41 @@ function App() {
     }
   };
 
+  const handleSearch = async (endpoint: string = "") => {
+    const response = await api.searchDogs(endpoint);
+    const dogIds = response.resultIds;
+    setNext(response.next);
+    setPrev(response.prev);
+    const dogArray = await api.getDogs(dogIds);
+    setSearchedDogs(dogArray);
+  };
+
+  const handleMatch = async () => {
+    const matchedDog: Match = await api.matchDog(likedDogs.map((dog) => dog.id));
+    const matchedDogObject: Dog[] = await api.getDogs([matchedDog.match]);
+    setMatchedDog(matchedDogObject[0]);
+  };
+
   return (
     <>
       <Title>Fetch a Dog!</Title>
       <AuthenticationForm />
-      <button onClick={api.logout}>Logout</button>
-      <button onClick={api.getDogBreeds}>Dog Breeds</button>
-      <button onClick={api.searchDogs}>Search Dogs</button>
-      <button onClick={api.getDogs}>Get Dogs</button>
+      <button onClick={() => api.logout()}>Logout</button>
+      <button onClick={() => api.getDogBreeds()}>Dog Breeds</button>
+      <button onClick={() => handleSearch()}>Search Dogs</button>
+      <button onClick={() => handleSearch(next)}>Next</button>
+      <button onClick={() => handleSearch(prev)}>Prev</button>
+      <button onClick={() => handleMatch()}>Match</button>
 
       <DogsDisplay>
-        {testDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.includes(dog)}/>))}
+        {searchedDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.includes(dog)}/>))}
       </DogsDisplay>
       <DogsDisplay>
         {likedDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={true}/>))}
+      </DogsDisplay>
+
+      <DogsDisplay>
+        <DogCard handleLikeUnlike={handleLikeUnlike} dogObject={matchedDog} liked={true} />
       </DogsDisplay>
     </>
   )
