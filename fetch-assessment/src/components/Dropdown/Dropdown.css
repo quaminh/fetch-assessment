@@ -1,0 +1,25 @@
+.dropdown, .options, .item {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.options {
+    list-style: none;
+    max-height: 200px;
+    overflow-y: scroll;
+    position: absolute;
+    top: 1em;
+    z-index: 1;
+}
+
+.item {
+    background-color: white;
+    cursor: default;
+}
+.item:hover {
+    background-color: aliceblue;
+}

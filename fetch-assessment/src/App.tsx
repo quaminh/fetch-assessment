@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import * as api from './api.ts'
 import Title from './components/Title/Title'
@@ -26,14 +26,16 @@ function App() {
   const [prev, setPrev] = useState<string>("");
   const [matchedDog, setMatchedDog] = useState<Dog>(emptyDog);
 
+  useEffect(() => {
+    api.getDogBreeds().then((breeds) => setAllBreeds(breeds));
+  }, [])
+
   const handleLogin = async (formData: FormData) => {
     const status = await api.login(formData);
     if (status === 200) {
       setLoggedIn(true);
       alert("Logged in successfully!");
-      const dogBreeds = await api.getDogBreeds();
       handleSearch();
-      setAllBreeds(dogBreeds);
     }
   };
 
@@ -89,7 +91,7 @@ function App() {
       
       <SearchFilters allBreeds={allBreeds} handleSearch={handleSearch} />
       <DogsDisplay>
-        {searchedDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.includes(dog)}/>))}
+        {searchedDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.map((dog) => dog.id).includes(dog.id)}/>))}
       </DogsDisplay>
       <DogsDisplay>
         {likedDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={true}/>))}

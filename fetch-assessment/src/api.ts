@@ -13,7 +13,7 @@ export async function login(formData: FormData) {
             headers: headers,
             credentials: "include"
         });
-        console.log(response);
+        console.log(response.status);
         return response.status;
     }
     catch (error) {
@@ -27,8 +27,8 @@ export async function logout() {
             method: "POST",
             headers: headers,
             credentials: "include"
-        })
-        console.log(response);
+        });
+        console.log(response.status);
         return response.status;
     }
     catch (error) {
@@ -43,6 +43,9 @@ export async function getDogBreeds() {
             headers: headers,
             credentials: "include"
         })
+        if (response.status !== 200) {
+            throw new Error(`Error Code ${response.status}: ${response.statusText}`);
+        }
         const parsed = await response.json();
         console.log(parsed);
         return parsed;
@@ -54,7 +57,8 @@ export async function getDogBreeds() {
 
 export async function searchDogs(endpoint?: string, sortOrder: "ascending"|"descending" = "ascending", breeds?: string[], zipCodes?: string[], ageMin?: number, ageMax?: number) {
     if (!endpoint) {
-        endpoint = `/dogs/search?sort=breed:${sortOrder.toLowerCase().substring(0, 3)}`;
+        const n = sortOrder.toLowerCase() === "ascending" ? 3 : 4; // size of substring
+        endpoint = `/dogs/search?sort=breed:${sortOrder.toLowerCase().substring(0, n)}`;
         if (breeds && breeds.length !== 0) {
             console.log(breeds);
             endpoint += breeds.reduce((prev, curr) => prev + '&breeds[]=' + encodeURIComponent(curr), "");
@@ -79,6 +83,9 @@ export async function searchDogs(endpoint?: string, sortOrder: "ascending"|"desc
             headers: headers,
             credentials: "include"
         })
+        if (response.status !== 200) {
+            throw new Error(`Error Code ${response.status}: ${response.statusText}`);
+        }
         const parsed = await response.json();
         console.log(parsed);
         return parsed;
@@ -96,6 +103,9 @@ export async function getDogs(dogIds: string[]) {
             headers: headers,
             credentials: "include"
         })
+        if (response.status !== 200) {
+            throw new Error(`Error Code ${response.status}: ${response.statusText}`);
+        }
         const parsed = await response.json();
         console.log(parsed);
         return parsed;
@@ -113,6 +123,9 @@ export async function matchDog(dogIds: string[]) {
             headers: headers,
             credentials: "include"
         })
+        if (response.status !== 200) {
+            throw new Error(`Error Code ${response.status}: ${response.statusText}`);
+        }
         const parsed = await response.json();
         console.log(parsed);
         return parsed;
@@ -130,6 +143,9 @@ export async function getLocations(zipcodes: string[]) {
             headers: headers,
             credentials: "include"
         })
+        if (response.status !== 200) {
+            throw new Error(`Error Code ${response.status}: ${response.statusText}`);
+        }
         console.log(await response.json());
     }
     catch (error) {
@@ -147,6 +163,9 @@ export async function searchLocations() {
             headers: headers,
             credentials: "include"
         })
+        if (response.status !== 200) {
+            throw new Error(`Error Code ${response.status}: ${response.statusText}`);
+        }
         console.log(await response.json());
     }
     catch (error) {
