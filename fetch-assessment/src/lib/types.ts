@@ -1,6 +1,6 @@
 export type Dog = {
     id: string,
-    img: string | null,
+    img: string | undefined,
     name: string,
     age: number,
     zip_code: string,

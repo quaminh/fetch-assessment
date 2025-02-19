@@ -20,7 +20,7 @@ export default function DogCard({ handleLikeUnlike, dogObject, liked } : DogCard
                     handleLikeUnlike(dogObject, liked);
                 }} liked={liked} />
             </div>
-            <img src={dogObject.img} />
+            <img src={dogObject.img} alt={`Photo of the dog ${dogObject.name}`} />
         </div>
     )
 }

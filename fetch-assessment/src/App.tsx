@@ -10,7 +10,7 @@ import { Dog, Match } from './lib/types'
 
 const emptyDog: Dog = {
   id: "",
-  img: null,
+  img: undefined,
   name: "",
   breed: "",
   age: 0,

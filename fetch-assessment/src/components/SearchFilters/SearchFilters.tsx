@@ -1,4 +1,5 @@
 import "./SearchFilters.css"
+import FilterChip from "../FilterChip/FilterChip"
 import { useState, useRef } from "react"
 
 type SearchFilterProps = {
@@ -20,6 +21,10 @@ export default function SearchFilters({ allBreeds, handleSearch } : SearchFilter
             setSelectedZipCodes((prev) => [...prev, zip]);
         }
     };
+
+    const handleDeleteZipCode = (value: string) => {
+        setSelectedZipCodes((prev) => prev.filter((zip) => zip !== value));
+    };
     
     return (
     <>
@@ -37,6 +42,9 @@ export default function SearchFilters({ allBreeds, handleSearch } : SearchFilter
         <button onClick={() => handleSearch("", sortOrder.current?.value,
             selectedBreeds, selectedZipCodes,
             ageMin.current?.value, ageMax.current?.value)}>Search Dogs</button>
+        <div>
+            {selectedZipCodes.map((zip) => (<FilterChip value={zip} handleDeleteValue={handleDeleteZipCode} />))}
+        </div>
         <button onClick={() => console.log(ageMin.current?.value)}>ageMin</button>
         <button onClick={() => console.log(ageMax.current?.value)}>ageMax</button>
         <button onClick={() => console.log(selectedZipCodes)}>zipCode</button>

@@ -57,11 +57,11 @@ export async function searchDogs(endpoint?: string, sortOrder: "ascending"|"desc
         endpoint = `/dogs/search?sort=breed:${sortOrder.toLowerCase().substring(0, 3)}`;
         if (breeds && breeds.length !== 0) {
             console.log(breeds);
-            endpoint += '&breeds=' + encodeURIComponent(breeds.toString());
+            endpoint += breeds.reduce((prev, curr) => prev + '&breeds[]=' + encodeURIComponent(curr), "");
         }
         if (zipCodes && zipCodes.length !== 0) {
             console.log(zipCodes);
-            endpoint += '&zipCodes=' + encodeURIComponent(zipCodes.toString());
+            endpoint += zipCodes.reduce((prev, curr) => prev + '&zipCodes[]=' + encodeURIComponent(curr), "");
         }
         if (ageMin) {
             console.log(ageMin);
@@ -73,6 +73,7 @@ export async function searchDogs(endpoint?: string, sortOrder: "ascending"|"desc
         }
     }
     try {
+        console.log(url+endpoint);
         const response = await fetch(url + endpoint, {
             method: "GET",
             headers: headers,
