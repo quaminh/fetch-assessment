@@ -5,6 +5,7 @@ import Title from './components/Title/Title'
 import AuthenticationForm from './components/AuthenticationForm/AuthenticationForm'
 import DogsDisplay from './components/DogsDisplay/DogsDisplay.tsx'
 import DogCard from './components/DogCard/DogCard'
+import SearchFilters from './components/SearchFilters/SearchFilters.tsx'
 import { Dog, Match } from './lib/types'
 
 const emptyDog: Dog = {
@@ -18,7 +19,7 @@ const emptyDog: Dog = {
 
 function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [breeds, setBreeds] = useState<string[]>([]);
+  const [allBreeds, setAllBreeds] = useState<string[]>([]);
   const [likedDogs, setLikedDogs] = useState<Dog[]>([]);
   const [searchedDogs, setSearchedDogs] = useState<Dog[]>([]);
   const [next, setNext] = useState<string>("");
@@ -31,7 +32,8 @@ function App() {
       setLoggedIn(true);
       alert("Logged in successfully!");
       const dogBreeds = await api.getDogBreeds();
-      setBreeds(dogBreeds);
+      handleSearch();
+      setAllBreeds(dogBreeds);
     }
   };
 
@@ -52,8 +54,13 @@ function App() {
     }
   };
 
-  const handleSearch = async (endpoint: string = "") => {
-    const response = await api.searchDogs(endpoint);
+  const handleSearch = async (endpoint: string = "",
+                              sortOrder: "ascending"|"descending" = "ascending",
+                              breeds?: string[],
+                              zipCodes?: string[],
+                              ageMin?: number,
+                              ageMax?: number) => {
+    const response = await api.searchDogs(endpoint, sortOrder, breeds, zipCodes, ageMin, ageMax);
     const dogIds = response.resultIds;
     setNext(response.next);
     setPrev(response.prev);
@@ -76,21 +83,11 @@ function App() {
       </> :
       <>
       <button onClick={() => handleLogout()}>Logout</button>
-      <button onClick={() => handleSearch()}>Search Dogs</button>
       <button onClick={() => handleSearch(next)}>Next</button>
       <button onClick={() => handleSearch(prev)}>Prev</button>
       <button onClick={() => handleMatch()}>Match</button>
-      <select>
-        {breeds.map((breed) => (<option>{breed}</option>))}
-      </select>
-      <select>
-        <option>Ascending</option>
-        <option>Descending</option>
-      </select>
-      <input type="number" placeholder="Min" />
-      <input type="number" placeholder="Max" />
-      <input type="number" placeholder="Zip Code" />
-
+      
+      <SearchFilters allBreeds={allBreeds} handleSearch={handleSearch} />
       <DogsDisplay>
         {searchedDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.includes(dog)}/>))}
       </DogsDisplay>

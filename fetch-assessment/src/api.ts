@@ -52,20 +52,24 @@ export async function getDogBreeds() {
     }
 }
 
-export async function searchDogs(endpoint?: string, sortOrder: "ascending" | "descending" = "ascending", breeds?: string[], zipCodes?: number[], ageMin?: number, ageMax?: number) {
+export async function searchDogs(endpoint?: string, sortOrder: "ascending"|"descending" = "ascending", breeds?: string[], zipCodes?: string[], ageMin?: number, ageMax?: number) {
     if (!endpoint) {
-        endpoint = `/dogs/search?sort=breed:${sortOrder.substring(0, 3)}`;
-        if (breeds) {
-            endpoint += '&' + encodeURIComponent(breeds.toString());
+        endpoint = `/dogs/search?sort=breed:${sortOrder.toLowerCase().substring(0, 3)}`;
+        if (breeds && breeds.length !== 0) {
+            console.log(breeds);
+            endpoint += '&breeds=' + encodeURIComponent(breeds.toString());
         }
-        if (zipCodes) {
-            endpoint += '&' + encodeURIComponent(zipCodes.toString());
+        if (zipCodes && zipCodes.length !== 0) {
+            console.log(zipCodes);
+            endpoint += '&zipCodes=' + encodeURIComponent(zipCodes.toString());
         }
         if (ageMin) {
-            endpoint += '&' + encodeURIComponent(ageMin);
+            console.log(ageMin);
+            endpoint += '&ageMin=' + encodeURIComponent(ageMin);
         }
         if (ageMax) {
-            endpoint += '&' + encodeURIComponent(ageMax);
+            console.log(ageMax);
+            endpoint += '&ageMax=' + encodeURIComponent(ageMax);
         }
     }
     try {
