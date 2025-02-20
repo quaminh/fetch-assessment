@@ -7,6 +7,8 @@ import DogsDisplay from './components/DogsDisplay/DogsDisplay.tsx'
 import DogCard from './components/DogCard/DogCard'
 import SearchFilters from './components/SearchFilters/SearchFilters.tsx'
 import { Dog, Match } from './lib/types'
+import Heading from './components/Heading/Heading.tsx'
+import MatchedDog from './components/MatchedDog/MatchedDog.tsx'
 
 const emptyDog: Dog = {
   id: "",
@@ -27,8 +29,11 @@ function App() {
   const [matchedDog, setMatchedDog] = useState<Dog>(emptyDog);
 
   useEffect(() => {
-    api.getDogBreeds().then((breeds) => setAllBreeds(breeds));
-  }, [])
+    if (loggedIn) {
+      api.getDogBreeds().then((breeds) => setAllBreeds(breeds))
+                        .catch((err) => console.error(err));
+    }
+  }, [loggedIn])
 
   const handleLogin = async (formData: FormData) => {
     const status = await api.login(formData);
@@ -85,21 +90,23 @@ function App() {
       </> :
       <>
       <button onClick={() => handleLogout()}>Logout</button>
+      
+      <Heading text="Step 1: Search for your favorite dogs!" />
+      <SearchFilters allBreeds={allBreeds} handleSearch={handleSearch} />
       <button onClick={() => handleSearch(next)}>Next</button>
       <button onClick={() => handleSearch(prev)}>Prev</button>
-      <button onClick={() => handleMatch()}>Match</button>
-      
-      <SearchFilters allBreeds={allBreeds} handleSearch={handleSearch} />
       <DogsDisplay>
-        {searchedDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.map((dog) => dog.id).includes(dog.id)}/>))}
-      </DogsDisplay>
-      <DogsDisplay>
-        {likedDogs.map((dog) => (<DogCard handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={true}/>))}
+        {searchedDogs.map((dog) => (<DogCard key={dog.id} handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.map((dog) => dog.id).includes(dog.id)}/>))}
       </DogsDisplay>
 
+      <Heading text="Step 2: Like your favorite dogs!" />
       <DogsDisplay>
-        <DogCard handleLikeUnlike={handleLikeUnlike} dogObject={matchedDog} liked={true} />
+        {likedDogs.map((dog) => (<DogCard key={dog.id} handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={true}/>))}
       </DogsDisplay>
+
+      <Heading text="Step 3: Find your doggy match!" />
+      <button onClick={() => handleMatch()}>Match</button>
+      <MatchedDog dogObject={matchedDog} />
       </>}
     </>
   )
