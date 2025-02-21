@@ -41,6 +41,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const breeds = await api.getDogBreeds();
+      if (!breeds) return;
       setAllBreeds(breeds);
       handleSearch();
     }
@@ -66,6 +67,9 @@ function App() {
       setLoggedIn(true);
       alert("Logged in successfully!");
     }
+    else {
+      alert("Error: Something went wrong.");
+    }
   };
 
   const handleLogout = async () => {
@@ -73,6 +77,9 @@ function App() {
     if (status === 200) {
       setLoggedIn(false);
       alert("Logged out successfully");
+    }
+    else {
+      alert("Error: Something went wrong.");
     }
   };
 
@@ -102,11 +109,13 @@ function App() {
                               ageMin?: number,
                               ageMax?: number) => {
     const response = await api.searchDogs(endpoint, sortOrder, breeds, zipCodes, ageMin, ageMax);
+    if (!response) return;
     const dogIds = response.resultIds;
     setTotalDogs(response.total);
     setNext(response.next);
     setPrev(response.prev);
     const dogArray = await api.getDogs(dogIds);
+    if (!dogArray) return;
     setSearchedDogs(dogArray);
     if (!endpoint) {
       setPageNumber(0);
@@ -116,7 +125,9 @@ function App() {
   const handleMatch = async () => {
     if (likedDogs.length > 0) {
       const matchedDog: Match = await api.matchDog(likedDogs.map((dog) => dog.id));
+      if (!matchedDog) return;
       const matchedDogObject: Dog[] = await api.getDogs([matchedDog.match]);
+      if (!matchedDogObject) return;
       setMatchedDog(matchedDogObject[0]);
     }
     else {
