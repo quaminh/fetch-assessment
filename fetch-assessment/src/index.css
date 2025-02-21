@@ -2,3 +2,31 @@ body, h1, h2, h3, h4, p, ul {
     margin: 0;
     padding: 0;
 }
+
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: rgb(255, 199, 108);
+}
+
+.center-align {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-row {
+    display: flex;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.light-bg {
+    background-color: rgb(255, 233, 159);
+}

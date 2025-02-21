@@ -1,6 +1,7 @@
 import './DogCard.css'
 import LikeButton from '../LikeButton/LikeButton'
 import { Dog } from '../../lib/types'
+import LocationIcon from "../../assets/location.svg"
 
 type DogCardProps = {
     handleLikeUnlike: Function,
@@ -11,16 +12,21 @@ type DogCardProps = {
 export default function DogCard({ handleLikeUnlike, dogObject, liked } : DogCardProps) {
     return (
         <div className="dogCard">
-            <div className="container">
+            <div className="header">
                 <h1 className="name">{dogObject.name}</h1>
-                <h2 className="age">{dogObject.age}</h2>
-                <h3 className="breed">{dogObject.breed}</h3>
-                <h4 className="zipCode">{dogObject.zip_code}</h4>
                 <LikeButton onClick={() => {
                     handleLikeUnlike(dogObject, liked);
                 }} liked={liked} />
             </div>
-            <img src={dogObject.img} alt={`Photo of the dog ${dogObject.name}`} />
+            <div className="dogImage">
+                <img className="dogImg" src={dogObject.img} alt={`Photo of the dog ${dogObject.name}`} />
+            </div>
+            <h2 className="breed">{dogObject.breed}</h2>
+            <h3 className="age">Age: {dogObject.age}</h3>
+            <div className="info">
+                <img className="icon" src={LocationIcon} alt="Location icon" />
+                <h4 className="zipCode">{dogObject.zip_code}</h4>
+            </div>
         </div>
     )
 }

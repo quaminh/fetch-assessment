@@ -1,7 +1,9 @@
 .dogsDisplay {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 1em;
-    border: black 1px solid;
     padding: 1em;
+    max-width: 80em;
+    border-radius: 1em;
 }

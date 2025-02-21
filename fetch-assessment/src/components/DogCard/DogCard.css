@@ -1,17 +1,39 @@
 .dogCard {
-    background-color: rgb(255, 178, 90);
+    background-color: rgb(255, 173, 21);
     padding: 1em;
-    width: 14em;
-    height: 14em;
+    width: 15em;
     border-radius: 1em;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+    color: white;
 }
 
-.container {
-    position: absolute;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .25em;
 }
 
-img {
-    width: 12em;
+.dogImage {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.icon {
+    height: 1em;
+}
+
+.info {
+    display: flex;
+    gap: 0.25em;
+    align-items: center;
+}
+
+.dogImg {
+    width: 13em;
     height: auto;
 }

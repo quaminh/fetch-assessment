@@ -1,0 +1,24 @@
+.arrowButton {
+    background-color: rgb(255, 173, 21);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: .25em;
+    cursor: pointer;
+    border: none;
+    border-radius: .25em;
+    padding: .2em .5em;
+}
+.arrowButton:hover {
+    background-color: rgb(255, 196, 21);
+}
+
+.arrowIcon {
+    height: 1em;
+}
+
+.right {
+    transform: rotateY(180deg);
+}

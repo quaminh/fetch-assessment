@@ -1,7 +1,7 @@
 import "./SmallMessage.css"
 
-export default function SmallMessage({ text, error } : { text: string, error?: boolean }) {
+export default function SmallMessage({ text } : { text: string }) {
     return (
-        <p className={error ? "error" : ""}>{text}</p>
+        <p>{text}</p>
     )
 }

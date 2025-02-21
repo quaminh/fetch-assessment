@@ -1,0 +1,15 @@
+.authDiv {
+    background-color: rgb(255, 178, 90);
+}
+
+.stepOneContainer {
+    padding: 1em;
+    gap: 1em;
+}
+
+.pageBtns {
+    padding: .5em 1em;
+    border-radius: .5em;
+    gap: .5em;
+    align-items: center;
+}

@@ -13,7 +13,6 @@ export default function SearchFilters({ allBreeds, handleSearch } : SearchFilter
     const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
     const [selectedZipCodes, setSelectedZipCodes] = useState<string[]>([]);
     const [breeds, setBreeds] = useState<string[]>([]);
-    const [errorMessage, setErrorMessage] = useState<string>("");
     const sortOrder = useRef<HTMLSelectElement>(null);
     const ageMin = useRef<HTMLInputElement>(null);
     const ageMax = useRef<HTMLInputElement>(null);
@@ -29,10 +28,9 @@ export default function SearchFilters({ allBreeds, handleSearch } : SearchFilter
             if (zip && /^\d{5}$/.test(zip) && !selectedZipCodes.includes(zip)) {
                 setSelectedZipCodes((prev) => [...prev, zip]);
                 zipCode.current.value = "";
-                setErrorMessage("");
             }
             else {
-                setErrorMessage("Error: Zip code must be a unique, numeric 5-digit code");
+                alert("Error: Zip code must be a unique, numeric 5-digit code");
             }
         }
     };
@@ -55,18 +53,17 @@ export default function SearchFilters({ allBreeds, handleSearch } : SearchFilter
         if (ageMin.current) {
             const min = Number(ageMin.current.value);
             if (!Number.isInteger(min) || min < 0) {
-                setErrorMessage("Error: Min/Max value must be a non-negative integer");
+                alert("Error: Min/Max value must be a non-negative integer");
                 return;
             }
         }
         if (ageMax.current) {
             const max = Number(ageMax.current.value);
             if (!Number.isInteger(max) || max < 0) {
-                setErrorMessage("Error: Min/Max value must be a non-negative integer");
+                alert("Error: Min/Max value must be a non-negative integer");
                 return;
             }
         }
-        setErrorMessage("");
         handleSearch("", sortOrder.current?.value,
             selectedBreeds, selectedZipCodes,
             ageMin.current?.value, ageMax.current?.value);
@@ -90,7 +87,6 @@ export default function SearchFilters({ allBreeds, handleSearch } : SearchFilter
         <div>
             {selectedBreeds.map((breed) => (<FilterChip key={breed} value={breed} handleDeleteValue={handleDeleteBreed} />))}
         </div>
-        {errorMessage !== "" && <SmallMessage text={errorMessage} error={true} />}
     </>
     )
 }

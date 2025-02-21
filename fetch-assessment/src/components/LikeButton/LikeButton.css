@@ -1,3 +1,4 @@
-.liked {
-    background-color: red;
+.likeButton {
+    width: 2em;
+    cursor: pointer;
 }

@@ -6,10 +6,17 @@ type AuthenticationFormProps = {
 
 export default function AuthenticationForm({ handleLogin } : AuthenticationFormProps) {
     return (
-        <form action={handleLogin}>
-            <input name="name" type="text" placeholder="Name" required></input>
-            <input name="email" type="email" placeholder="Email" required></input>
-            <button type="submit">Login</button>
+        <form className="flex-col authForm" action={handleLogin}>
+            <div className="flex-col">
+                <label htmlFor="name">Enter your name:</label>
+                <input id="name" className="authInput" name="name" type="text" placeholder="Name" required />
+            </div>
+
+            <div className="flex-col">
+                <label htmlFor="email">Enter your email:</label>
+                <input id="email" className="authInput" name="email" type="email" placeholder="Email" required />
+            </div>
+            <button className="loginBtn" type="submit">LOGIN</button>
         </form>
     )
 }
