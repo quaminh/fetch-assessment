@@ -23,7 +23,7 @@ export default function DogCard({ handleLikeUnlike, dogObject, liked } : DogCard
             </div>
             <h2 className="breed">{dogObject.breed}</h2>
             <h3 className="age">Age: {dogObject.age}</h3>
-            <div className="info">
+            <div className="location-info">
                 <img className="icon" src={LocationIcon} alt="Location icon" />
                 <h4 className="zipCode">{dogObject.zip_code}</h4>
             </div>

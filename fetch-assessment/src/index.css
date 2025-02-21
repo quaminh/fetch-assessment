@@ -30,3 +30,23 @@ body {
 .light-bg {
     background-color: rgb(255, 233, 159);
 }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon {
+    height: 1em;
+}
+
+.icon-invert {
+    filter: invert(100%);
+}
+
+.location-info {
+    display: flex;
+    gap: 0.25em;
+    align-items: center;
+}

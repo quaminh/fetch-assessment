@@ -3,14 +3,17 @@ import './App.css'
 import * as api from './api.ts'
 import Title from './components/Title/Title'
 import AuthenticationForm from './components/AuthenticationForm/AuthenticationForm'
+import Header from './components/Header/Header.tsx'
+import Footer from './components/Footer/Footer.tsx'
 import DogsDisplay from './components/DogsDisplay/DogsDisplay.tsx'
 import DogCard from './components/DogCard/DogCard'
 import SearchFilters from './components/SearchFilters/SearchFilters.tsx'
-import { Dog, Match } from './lib/types'
 import Heading from './components/Heading/Heading.tsx'
 import MatchedDog from './components/MatchedDog/MatchedDog.tsx'
 import SmallMessage from './components/SmallMessage/SmallMessage.tsx'
 import ArrowButton from './components/ArrowButton/ArrowButton.tsx'
+import Button from './components/Button/Button.tsx'
+import { Dog, Match } from './lib/types'
 
 const emptyDog: Dog = {
   id: "",
@@ -106,9 +109,14 @@ function App() {
   };
 
   const handleMatch = async () => {
-    const matchedDog: Match = await api.matchDog(likedDogs.map((dog) => dog.id));
-    const matchedDogObject: Dog[] = await api.getDogs([matchedDog.match]);
-    setMatchedDog(matchedDogObject[0]);
+    if (likedDogs.length > 0) {
+      const matchedDog: Match = await api.matchDog(likedDogs.map((dog) => dog.id));
+      const matchedDogObject: Dog[] = await api.getDogs([matchedDog.match]);
+      setMatchedDog(matchedDogObject[0]);
+    }
+    else {
+      alert("You haven't liked any dogs yet!");
+    }
   };
 
   return (
@@ -120,41 +128,52 @@ function App() {
         <AuthenticationForm handleLogin={handleLogin} />
       </div>
       </> :
-      <>
-      <button onClick={() => handleLogout()}>Logout</button>
-      
-      <Heading text="Step 1: Search for your favorite dogs!" />
-      <SearchFilters allBreeds={allBreeds} handleSearch={handleSearch} />
+      <div className="flex-col section-gap">
+        <Header handleLogout={handleLogout} />
 
-      <div className="flex-col center-align stepOneContainer">
-        <div className="flex-row light-bg pageBtns">
-          {prev && <ArrowButton onClick={() => handlePrevPage()} />}
-          <SmallMessage text={`Showing ${pageNumber*25+1}-${(pageNumber+1)*25} of ${totalDogs} dogs`} />
-          {next && <ArrowButton onClick={() => handleNextPage()} pointRight={true} />}
+        <div>
+          <Heading text="Step 1: Search for your favorite dogs!" leftMargin={true} />
+          <SearchFilters allBreeds={allBreeds} handleSearch={handleSearch} />
+
+          <div className="flex-col center-align stepOneContainer">
+            <div className="flex-row light-bg pageBtns">
+              {prev && <ArrowButton onClick={() => handlePrevPage()} />}
+              <SmallMessage text={`Showing ${pageNumber*25+1}-${(pageNumber+1)*25} of ${totalDogs} dogs`} />
+              {next && <ArrowButton onClick={() => handleNextPage()} pointRight={true} />}
+            </div>
+
+            <DogsDisplay>
+              {searchedDogs.map((dog) => (<DogCard key={dog.id} handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.map((dog) => dog.id).includes(dog.id)}/>))}
+            </DogsDisplay>
+
+            <div className="flex-row light-bg pageBtns">
+              {prev && <ArrowButton onClick={() => handlePrevPage()} />}
+              <SmallMessage text={`Showing ${pageNumber*25+1}-${(pageNumber+1)*25} of ${totalDogs} dogs`} />
+              {next && <ArrowButton onClick={() => handleNextPage()} pointRight={true} />}
+            </div>
+          </div>
         </div>
 
-        <DogsDisplay>
-          {searchedDogs.map((dog) => (<DogCard key={dog.id} handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={likedDogs.map((dog) => dog.id).includes(dog.id)}/>))}
-        </DogsDisplay>
-
-        <div className="flex-row light-bg pageBtns">
-          {prev && <ArrowButton onClick={() => handlePrevPage()} />}
-          <SmallMessage text={`Showing ${pageNumber*25+1}-${(pageNumber+1)*25} of ${totalDogs} dogs`} />
-          {next && <ArrowButton onClick={() => handleNextPage()} pointRight={true} />}
+        <div>
+          <Heading text="Step 2: Like your favorite dogs!" leftMargin={true} />
+          <div className="center-align light-bg container">
+            {likedDogs.length > 0 ?
+              <DogsDisplay>
+                {likedDogs.map((dog) => (<DogCard key={dog.id} handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={true}/>))}
+              </DogsDisplay> :
+              <SmallMessage text="No dogs liked yet... Give a heart to some of them above!" />}
+          </div>
         </div>
-      </div>
 
-      <Heading text="Step 2: Like your favorite dogs!" />
-      <div className="center-align light-bg">
-        <DogsDisplay>
-          {likedDogs.map((dog) => (<DogCard key={dog.id} handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={true}/>))}
-        </DogsDisplay>
-      </div>
-
-      <Heading text="Step 3: Find your doggy match!" />
-      <button onClick={() => handleMatch()}>Match</button>
-      <MatchedDog dogObject={matchedDog} />
-      </>}
+        <div>
+          <Heading text="Step 3: Find your doggy match!" leftMargin={true} />
+          <div className="flex-col center-align light-bg container">
+            <MatchedDog dogObject={matchedDog} />
+            <Button onClick={() => handleMatch()} text="Match!" />
+          </div>
+        </div>
+      </div>}
+      <Footer />
     </>
   )
 }

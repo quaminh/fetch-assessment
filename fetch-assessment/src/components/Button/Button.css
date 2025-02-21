@@ -1,29 +1,16 @@
-.authForm {
-    width: 32em;
-    gap: 0.5em;
-}
-
-.authForm input {
-    padding: .5em;
-    border: black 1px solid;
-    border-radius: .5em;
-}
-
-.loginBtn {
-    margin: 1em 8em;
-    padding: 1em;
+.btn {
+    padding: 1em 3em;
     font-size: 18px;
     font-weight: bold;
     background-color: rgb(255, 173, 21);
     color: white;
-    letter-spacing: 1px;
     border: white 2px solid;
     border-radius: .5em;
     cursor: pointer;
 }
-.loginBtn:hover {
+.btn:hover {
     background-color: rgb(255, 196, 21);
 }
-.loginBtn:focus {
+.btn:focus {
     background-color: rgb(255, 173, 21);
 }

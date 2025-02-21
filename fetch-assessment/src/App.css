@@ -13,3 +13,12 @@
     gap: .5em;
     align-items: center;
 }
+
+.container {
+    min-height: 15em;
+    padding: 2em;
+}
+
+.section-gap {
+    gap: 2em;
+}
