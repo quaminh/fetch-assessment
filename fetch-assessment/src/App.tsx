@@ -15,7 +15,9 @@ import SmallMessage from './components/SmallMessage/SmallMessage.tsx'
 import ArrowButton from './components/ArrowButton/ArrowButton.tsx'
 import Button from './components/Button/Button.tsx'
 import { Dog, Match } from './lib/types'
+import pawImage from './assets/paw.svg'
 
+// Empty dog object to act as placeholder for the matched dog
 const emptyDog: Dog = {
   id: "",
   img: undefined,
@@ -37,10 +39,13 @@ function App() {
   const [matchedDog, setMatchedDog] = useState<Dog>(emptyDog);
 
   useEffect(() => {
-    if (loggedIn) {
-      api.getDogBreeds().then((breeds) => setAllBreeds(breeds))
-                        .catch((err) => console.error(err));
+    const fetchData = async () => {
+      const breeds = await api.getDogBreeds();
+      setAllBreeds(breeds);
+      handleSearch();
     }
+
+    fetchData();
   }, [loggedIn])
 
   const incrementPage = () => {
@@ -60,7 +65,6 @@ function App() {
     if (status === 200) {
       setLoggedIn(true);
       alert("Logged in successfully!");
-      handleSearch();
     }
   };
 
@@ -125,6 +129,7 @@ function App() {
       {!loggedIn ?
       <>
       <div className="flex-col center-align full-height">
+        <img className="pawImg" src={pawImage} alt="Dog paw vector image" />
         <Title>FETCH A DOG!</Title>
         <AuthenticationForm handleLogin={handleLogin} />
       </div>

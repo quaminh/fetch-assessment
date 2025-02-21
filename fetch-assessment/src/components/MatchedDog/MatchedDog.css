@@ -2,3 +2,8 @@
     padding: 1em;
     gap: .2em;
 }
+
+.matchedDogImg {
+    height: 20em;
+    margin: 1em;
+}

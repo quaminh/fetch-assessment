@@ -72,7 +72,7 @@ export default function SearchFilters({ allBreeds, handleSearch } : SearchFilter
     
     return (
     <div className="light-bg">
-        <div className="center-align filters">
+        <div className="filters">
             <div className="flex-col filter-group">
                 <label htmlFor="sortOrder">Sort by breed:</label>
                 <select id="sortOrder" ref={sortOrder}>
