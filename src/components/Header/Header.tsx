@@ -1,5 +1,5 @@
 import "./Header.css"
-import Heading from "../Heading/Heading.tsx"
+import Heading from "../Heading/Heading"
 import Button from "../Button/Button"
 import pawImage from "../../assets/paw.svg"
 
