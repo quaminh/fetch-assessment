@@ -12,17 +12,10 @@ which the list will be used to match the perfect dog to them.
 To run the application on your local machine, navigate to this directory
 and type in the command prompt:
 ```
-cd fetch-assessment
-```
-
-The `fetch-assessment` directory should include all the source code for
-the application.
-Once you are in the `fetch-assessment` directory, run:
-```
 npm install
 ```
 
-Finally, run this command to start the application:
+Then, run this command to start the application:
 ```
 npm run dev
 ```
