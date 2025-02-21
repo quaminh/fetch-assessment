@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import * as api from './api.ts'
+import * as api from './api'
 import Title from './components/Title/Title'
 import AuthenticationForm from './components/AuthenticationForm/AuthenticationForm'
 import Header from './components/Header/Header'
