@@ -1,0 +1,6 @@
+.chipsDisplay {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25em;
+    width: 25em;
+}

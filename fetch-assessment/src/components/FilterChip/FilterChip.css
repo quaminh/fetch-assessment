@@ -1,0 +1,16 @@
+.chip {
+    background-color: rgb(255, 173, 21);
+    border-radius: 5em;
+    padding: .1em 1em;
+    color: white;
+    font-weight: bold;
+    text-wrap: nowrap;
+    width: fit-content;
+    height: fit-content;
+    gap: 1em;
+}
+
+.crossIcon {
+    width: .75em;
+    cursor: pointer;
+}

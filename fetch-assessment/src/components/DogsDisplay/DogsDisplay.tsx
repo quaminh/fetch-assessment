@@ -1,9 +1,9 @@
 import "./DogsDisplay.css"
 
 
-export default function DogsDisplay({ children } : { children: React.ReactNode}) {
+export default function DogsDisplay({ children, overflow } : { children: React.ReactNode, overflow?: boolean }) {
     return (
-        <div className="dogsDisplay light-bg">
+        <div className={`dogsDisplay light-bg ${overflow ? "overflow" : ""}`}>
             {children}
         </div>
     )

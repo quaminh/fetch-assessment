@@ -1,0 +1,36 @@
+.filters {
+    padding: 1em;
+    gap: 2em;
+}
+
+.filter-group {
+    gap: .2em;
+}
+
+.filters select, input {
+    padding: .25em;
+    border: black 1px solid;
+    border-radius: .25em;
+}
+
+.addBtn {
+    padding: .25em;
+    color: white;
+    font-weight: bold;
+    background-color: rgb(255, 173, 21);
+    border: none;
+    border-radius: .25em;
+    cursor: pointer;
+}
+.addBtn:hover {
+    background-color: rgb(255, 196, 21);
+}
+.addBtn:focus {
+    background-color: rgb(255, 173, 21);
+}
+
+.chipDisplayContainers {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+}

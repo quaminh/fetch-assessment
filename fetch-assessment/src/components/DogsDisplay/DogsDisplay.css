@@ -7,3 +7,8 @@
     max-width: 80em;
     border-radius: 1em;
 }
+
+.overflow {
+    overflow-y: scroll;
+    height: 30em;
+}

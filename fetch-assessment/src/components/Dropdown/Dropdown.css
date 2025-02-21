@@ -7,19 +7,38 @@
     position: relative;
 }
 
+.dropdownBtn {
+    background-color: rgb(255, 173, 21);
+    border: none;
+    width: 2em;
+    cursor: pointer;
+}
+.dropdownBtn:hover {
+    background-color: rgb(255, 196, 21);
+}
+
+.up {
+    transform: rotateZ(90deg);
+}
+
+.down {
+    transform: rotateZ(-90deg);
+}
+
 .options {
     list-style: none;
     max-height: 200px;
     overflow-y: scroll;
     position: absolute;
-    top: 1em;
+    top: 1.5em;
     z-index: 1;
 }
 
 .item {
     background-color: white;
     cursor: default;
+    padding: .25em;
 }
 .item:hover {
-    background-color: aliceblue;
+    background-color: rgb(255, 246, 221);
 }

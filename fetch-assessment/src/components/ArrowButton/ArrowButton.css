@@ -15,10 +15,6 @@
     background-color: rgb(255, 196, 21);
 }
 
-.arrowIcon {
-    height: 1em;
-}
-
 .right {
     transform: rotateY(180deg);
 }

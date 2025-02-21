@@ -9,6 +9,7 @@ import DogsDisplay from './components/DogsDisplay/DogsDisplay.tsx'
 import DogCard from './components/DogCard/DogCard'
 import SearchFilters from './components/SearchFilters/SearchFilters.tsx'
 import Heading from './components/Heading/Heading.tsx'
+import Subheading from './components/Subheading/Subheading.tsx'
 import MatchedDog from './components/MatchedDog/MatchedDog.tsx'
 import SmallMessage from './components/SmallMessage/SmallMessage.tsx'
 import ArrowButton from './components/ArrowButton/ArrowButton.tsx'
@@ -133,6 +134,7 @@ function App() {
 
         <div>
           <Heading text="Step 1: Search for your favorite dogs!" leftMargin={true} />
+          <Subheading text="Use the filters to find your preferences and like your favorites!" />
           <SearchFilters allBreeds={allBreeds} handleSearch={handleSearch} />
 
           <div className="flex-col center-align stepOneContainer">
@@ -156,9 +158,10 @@ function App() {
 
         <div>
           <Heading text="Step 2: Like your favorite dogs!" leftMargin={true} />
+          <Subheading text="Your liked dogs will show up below!" />
           <div className="center-align light-bg container">
             {likedDogs.length > 0 ?
-              <DogsDisplay>
+              <DogsDisplay overflow={true}>
                 {likedDogs.map((dog) => (<DogCard key={dog.id} handleLikeUnlike={handleLikeUnlike} dogObject={dog} liked={true}/>))}
               </DogsDisplay> :
               <SmallMessage text="No dogs liked yet... Give a heart to some of them above!" />}
@@ -167,6 +170,7 @@ function App() {
 
         <div>
           <Heading text="Step 3: Find your doggy match!" leftMargin={true} />
+          <Subheading text="Once you have liked your favorites, it's time to find your match!" />
           <div className="flex-col center-align light-bg container">
             <MatchedDog dogObject={matchedDog} />
             <Button onClick={() => handleMatch()} text="Match!" />

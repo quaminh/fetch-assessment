@@ -1,4 +1,5 @@
 import "./FilterChip.css"
+import crossIcon from "../../assets/cross.svg"
 
 type FilterChipProps = {
     value: string,
@@ -7,9 +8,9 @@ type FilterChipProps = {
 
 export default function FilterChip({ value, handleDeleteValue } : FilterChipProps) {
     return (
-        <div className="chip">
+        <div className="chip header">
             {value}
-            <button onClick={() => handleDeleteValue(value)}>X</button>
+            <img className="crossIcon" src={crossIcon} onClick={() => handleDeleteValue(value)} alt="Cross icon" />
         </div>
     )
 }

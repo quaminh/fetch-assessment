@@ -1,8 +1,9 @@
 import "./SearchFilters.css"
 import FilterChip from "../FilterChip/FilterChip"
 import Dropdown from "../Dropdown/Dropdown"
+import Button from "../Button/Button"
+import ChipsDisplay from "../ChipsDisplay/ChipsDisplay"
 import { useState, useRef, useEffect } from "react"
-import SmallMessage from "../SmallMessage/SmallMessage"
 
 type SearchFilterProps = {
     allBreeds: string[],
@@ -70,23 +71,43 @@ export default function SearchFilters({ allBreeds, handleSearch } : SearchFilter
     }
     
     return (
-    <>
-        <select ref={sortOrder}>
-            <option>Ascending</option>
-            <option>Descending</option>
-        </select>
-        <input type="number" name="ageMin" placeholder="Min" ref={ageMin} />
-        <input type="number" name="ageMax" placeholder="Max" ref={ageMax} />
-        <input type="string" name="zipCode" placeholder="Zip Code" ref={zipCode} />
-        <button onClick={() => handleAddZipCode()}>Add</button>
-        <button onClick={() => search()}>Search Dogs</button>
-        <div>
-            {selectedZipCodes.map((zip) => (<FilterChip key={zip} value={zip} handleDeleteValue={handleDeleteZipCode} />))}
+    <div className="light-bg">
+        <div className="center-align filters">
+            <div className="flex-col filter-group">
+                <label htmlFor="sortOrder">Sort by breed:</label>
+                <select id="sortOrder" ref={sortOrder}>
+                    <option>Ascending</option>
+                    <option>Descending</option>
+                </select>
+            </div>
+
+            <div className="flex-col filter-group">
+                <label htmlFor="ageMin">Age range:</label>
+                <input id="ageMin" type="number" name="ageMin" placeholder="Min" ref={ageMin} />
+                <input id="ageMax" type="number" name="ageMax" placeholder="Max" ref={ageMax} />
+            </div>
+
+            <div className="flex-col filter-group">
+                <label htmlFor="zipCode">Add Zip Codes:</label>
+                <input id="zipCode" type="string" name="zipCode" placeholder="Zip Code" ref={zipCode} />
+                <button className="addBtn" onClick={() => handleAddZipCode()}>Add</button>
+            </div>
+
+            <div className="flex-col filter-group">
+                <label>Add breeds:</label>
+                <Dropdown options={breeds} handleAddValue={handleAddBreed} />
+            </div>
+
+            <Button onClick={() => search()} text="Search Dogs" />
         </div>
-        <Dropdown options={breeds} handleAddValue={handleAddBreed} />
-        <div>
+        <div className="chipDisplayContainers">
+            <ChipsDisplay title="Selected Zip Codes:">
+                {selectedZipCodes.map((zip) => (<FilterChip key={zip} value={zip} handleDeleteValue={handleDeleteZipCode} />))}
+            </ChipsDisplay>
+            <ChipsDisplay title="Selected Breeds:">
             {selectedBreeds.map((breed) => (<FilterChip key={breed} value={breed} handleDeleteValue={handleDeleteBreed} />))}
+            </ChipsDisplay>
         </div>
-    </>
+    </div>
     )
 }

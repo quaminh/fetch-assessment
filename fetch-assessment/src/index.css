@@ -50,3 +50,7 @@ body {
     gap: 0.25em;
     align-items: center;
 }
+
+.arrowIcon {
+    height: 1em;
+}

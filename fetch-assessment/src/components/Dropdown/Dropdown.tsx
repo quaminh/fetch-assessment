@@ -1,5 +1,6 @@
 import "./Dropdown.css"
 import { useState } from "react"
+import arrowIcon from "../../assets/arrow.svg"
 
 type DropdownProps = {
     options: string[],
@@ -12,7 +13,10 @@ export default function Dropdown({ options, handleAddValue } : DropdownProps) {
 
     return (
         <div className="dropdown" onClick={() => setFocused(!focused)}>
-            <input type="text" placeholder="Search Breeds..." onChange={(e) => setSearchValue(e.target.value)} />
+            <div className="flex-row">
+                <input type="text" placeholder="Search Breeds..." onChange={(e) => setSearchValue(e.target.value)} />
+                <button className="dropdownBtn"><img className={`arrowIcon ${focused ? "up" : "down"}`} src={arrowIcon} alt="Dropdown arrow icon" /></button>
+            </div>
             {focused &&
                 <ul className="options">
                     {options.filter((option) => option.toLowerCase().includes(searchValue.toLowerCase()))
